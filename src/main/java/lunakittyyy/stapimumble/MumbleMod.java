@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.client.event.network.ServerLoginSuccessEvent;
-import net.modificationstation.stationapi.api.entity.player.PlayerHandler;
 import net.modificationstation.stationapi.api.event.mod.InitEvent;
 import net.modificationstation.stationapi.api.event.tick.GameTickEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
@@ -17,10 +16,10 @@ import org.apache.commons.lang3.SystemUtils;
 import java.io.File;
 import java.util.ArrayList;
 
-public class MumbleMod implements PlayerHandler {
+public class MumbleMod {
 
     @Entrypoint.Logger
-    private static final Logger LOGGER = Null.get();
+    public static Logger LOGGER = Null.get();
 
     private boolean mumbleInited = false;
     private static boolean libLoaded = false;
@@ -29,15 +28,15 @@ public class MumbleMod implements PlayerHandler {
     private static final String modName = "STAPI-Mumble";
 
     @EventListener
-    private void joinEvent(ServerLoginSuccessEvent event) {
-        var game = (Minecraft)FabricLoader.getInstance().getGameInstance();
+    public void joinEvent(ServerLoginSuccessEvent event) {
+        var game = (Minecraft) FabricLoader.getInstance().getGameInstance();
         for (Exception exc : errors) {
             game.inGameHud.addChatMessage("STAPI-Mumble: " + exc.getMessage());
         }
     }
 
     @EventListener
-    private void tickEvent(GameTickEvent.End event) {
+    public void tickEvent(GameTickEvent.End event) {
         var game = (Minecraft)FabricLoader.getInstance().getGameInstance();
         if (game.world == null || !errors.isEmpty()) return;
 
@@ -50,7 +49,7 @@ public class MumbleMod implements PlayerHandler {
     }
 
     @EventListener
-    private void serverInit(InitEvent event) {
+    public void serverInit(InitEvent event) {
         String s = File.separator;
         String dllFolder = FabricLoader.getInstance().getGameDir().toString() + s + "mods" + s + modName + s + "natives" + s;
 
