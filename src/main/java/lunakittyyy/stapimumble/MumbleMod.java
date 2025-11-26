@@ -186,6 +186,7 @@ public class MumbleMod {
         // NOTE: worldName for multiplayer servers is by default "MPServer" seed is probably unique enough
         //String worldNameInit = "\"WorldName\":\"";
         String worldSeedInit = "\"WorldSeed\":\"";
+        String dimensionInit = "\"Dimension\":\"";
         String concatinator = "\", ";
         String endStr = "\"}";
 
@@ -195,6 +196,7 @@ public class MumbleMod {
         int numContents = 1;
 
         String worldSeed = Long.toString(world.getSeed());
+        int worldDimension = world.dimension.id;
 
         // string if world is not set
         String context_empty = startStr
@@ -208,6 +210,8 @@ public class MumbleMod {
         String context = startStr
                 + gameStr
                 + worldSeedInit + worldSeed.substring(0, newWorldSeedLen)
+                + concatinator
+                + dimensionInit + worldDimension
                 + endStr;
 
         return context;
